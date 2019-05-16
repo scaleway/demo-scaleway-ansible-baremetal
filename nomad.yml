@@ -1,0 +1,38 @@
+- name: create consul token for nomad
+  hosts: localhost
+  tasks:
+    - name: create nomad token
+      register: "consul_nomad_token"
+      consul_acl:
+        name: "nomad"
+        host: "{{ hostvars[groups['consul'][0]]['ansible_host']}}"
+        mgmt_token: "{{consul_acl_master_token}}"
+        rules:
+          - node: ""
+            policy: write
+          - service: ""
+            policy: write
+          - agent: ""
+            policy: write
+          - key: ""
+            policy: write
+          - session: ""
+            policy: write
+          - operator: read
+
+- name: install nomad
+  hosts:
+    - nomad
+    - nomad_agent
+  tags: nomad
+  vars:
+    nomad_consul_token: "{{  hostvars['localhost']['consul_nomad_token'].token }}"
+  roles:
+    - brianshumate.nomad
+
+- name: install docker
+  hosts:
+    - nomad_agent
+  tags: docker
+  roles:
+    - geerlingguy.docker

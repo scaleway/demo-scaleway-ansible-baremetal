@@ -1,0 +1,37 @@
+- name: create consul agent token
+  hosts: localhost
+  tags: consul_agent
+  tasks:
+    - name: create token agent
+      register: "consul_agent_token"
+      consul_acl:
+        name: "agent"
+        host: "{{ hostvars[groups['consul'][0]]['ansible_host']}}"
+        mgmt_token: "{{consul_acl_master_token}}"
+        rules:
+          - node: ""
+            policy: write
+          - service: ""
+            policy: read
+
+    - name: create token default
+      register: "consul_default_token"
+      consul_acl:
+        name: "default"
+        host: "{{ hostvars[groups['consul'][0]]['ansible_host']}}"
+        mgmt_token: "{{consul_acl_master_token}}"
+        rules:
+          - node: ""
+            policy: read
+          - service: ""
+            policy: read
+
+- name: install consul agent
+  hosts:
+    - consul_agent
+  vars:
+    consul_acl_agent_token: "{{ hostvars['localhost']['consul_agent_token'].token }}"
+    consul_acl_token: "{{ hostvars['localhost']['consul_default_token'].token }}"
+  tags: consul_agent
+  roles:
+    - brianshumate.consul

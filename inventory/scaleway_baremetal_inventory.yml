@@ -1,0 +1,8 @@
+plugin: scaleway_baremetal
+names:
+  - name
+zones:
+  - fr-par-2
+variables:
+  ansible_host: public_ipv4
+  tags: tags

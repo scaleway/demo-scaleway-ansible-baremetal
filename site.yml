@@ -1,0 +1,21 @@
+- hosts: localhost
+  tags: deploy
+  gather_facts: no
+  roles:
+    - deploy
+
+- hosts: clustering
+  gather_facts: no
+  tasks:
+    - name: Wait 300 seconds for port 22 to become open and contain "OpenSSH"
+      wait_for:
+        port: 22
+        timeout: 300
+        host: '{{ (ansible_ssh_host|default(ansible_host))|default(inventory_hostname) }}'
+        search_regex: OpenSSH
+      connection: local
+
+- import_playbook: install_python.yml
+- import_playbook: consul.yml
+- import_playbook: consul_agent.yml
+- import_playbook: nomad.yml

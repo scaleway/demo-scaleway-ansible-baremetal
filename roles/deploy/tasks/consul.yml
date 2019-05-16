@@ -1,0 +1,13 @@
+---
+# deploy consul servers
+- name: Deploy consul instance
+  scaleway_compute:
+    name: "{{scw_prefix_name}}-{{scw_consul_prefix_name}}-{{item}}"
+    state: running
+    image: "{{ scw_consul_image_id }}"
+    organization: "{{ scw_organization_id }}"
+    region: "{{ scw_region }}"
+    commercial_type: "{{ scw_consul_commercial_type }}"
+    tags: "{{scw_tags + scw_consul_tags}}"
+    wait: True
+  with_sequence: start=1 end={{ scw_consul_count }}

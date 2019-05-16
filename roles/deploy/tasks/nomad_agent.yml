@@ -1,0 +1,29 @@
+---
+# deploy nomad servers
+- name: Order nomad agents baremetal instance
+  scaleway_baremetal:
+    name: "{{scw_prefix_name}}-{{scw_nomad_agent_prefix_name}}-baremetal-{{item}}"
+    state: ready
+    image: "{{ scw_nomad_agent_image_id }}"
+    ssh_key_ids: "{{ scw_nomad_agent_ssh_key_ids }}"
+    organization: "{{ scw_organization_id }}"
+    zone: "{{ scw_nomad_agent_zone }}"
+    offer: "{{scw_nomad_agent_offer_id}}"
+    tags: "{{scw_tags + scw_nomad_agent_tags}}"
+    wait_order: False
+    wait_install: False
+  with_sequence: start=1 end={{ scw_nomad_agent_count }}
+
+- name: Wait nomad agents baremetal instance
+  scaleway_baremetal:
+    name: "{{scw_prefix_name}}-{{scw_nomad_agent_prefix_name}}-baremetal-{{item}}"
+    state: ready
+    image: "{{ scw_nomad_agent_image_id }}"
+    ssh_key_ids: "{{ scw_nomad_agent_ssh_key_ids }}"
+    organization: "{{ scw_organization_id }}"
+    zone: "{{ scw_nomad_agent_zone }}"
+    offer: "{{scw_nomad_agent_offer_id}}"
+    tags: "{{scw_tags + scw_nomad_agent_tags}}"
+    wait_order: True
+    wait_install: True
+  with_sequence: start=1 end={{ scw_nomad_agent_count }}

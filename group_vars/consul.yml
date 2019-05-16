@@ -1,0 +1,4 @@
+---
+consul_node_role: server
+consul_bootstrap_expect: true
+consul_addresses_http: "{{ hostvars[inventory_hostname]['ansible_default_ipv4']['address'] }}"

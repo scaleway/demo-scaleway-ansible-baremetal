@@ -1,0 +1,27 @@
+# Global
+scw_organization_id: cb78ad7e-f383-4013-863e-e00bf45a3df0
+
+# Consul
+scw_consul_count: 3
+consul_group_name: "consul"
+consul_syslog_enable: false
+consul_advertise_address: "{{ansible_host}}"
+consul_acl_enable: true
+consul_acl_default_policy: deny
+
+# Nomad
+scw_nomad_count: 3
+nomad_group_name: nomad
+nomad_syslog_enable: false
+nomad_advertise_address: "{{ansible_host}}"
+nomad_addresses_http: "{{ hostvars[inventory_hostname]['ansible_default_ipv4']['address'] }}"
+nomad_version: 0.9.1
+nomad_use_consul: true
+
+# Nomad agent baremetal
+scw_nomad_agent_count: 3
+
+# Theses token are just uuidv4, this should be regen
+consul_acl_master_token: 86653ec7-7371-4ccf-9881-e9201368ac8f
+consul_acl_replication_token: d4c4230e-1a28-4641-b273-aa6beae9d37d
+consul_raw_key: geig7ied1ooxie0Eicei1eex1quoomoh

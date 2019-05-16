@@ -1,0 +1,6 @@
+- name: install consul
+  hosts:
+    - consul
+  tags: consul
+  roles:
+    - brianshumate.consul

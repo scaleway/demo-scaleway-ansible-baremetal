@@ -1,0 +1,10 @@
+- name: Include consul
+  import_tasks: consul.yml
+
+- name: Include nomad
+  import_tasks: nomad.yml
+
+- name: Include nomad agent
+  import_tasks: nomad_agent.yml
+
+- meta: refresh_inventory

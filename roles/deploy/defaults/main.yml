@@ -1,0 +1,39 @@
+---
+scw_organization_id: ""
+scw_image_id: f974feac-abae-4365-b988-8ec7d1cec10d
+scw_region: par1
+scw_commercial_type: START1-S
+scw_prefix_name: "demo"
+scw_count: 1
+scw_tags:
+  - clustering
+  - compute_instance
+
+# Consul
+scw_consul_commercial_type: "{{scw_commercial_type}}"
+scw_consul_image_id: "{{scw_image_id}}"
+scw_consul_prefix_name: consul
+scw_consul_count: "{{scw_count}}"
+scw_consul_tags:
+  - consul
+
+
+# Nomad
+scw_nomad_commercial_type: "{{scw_commercial_type}}"
+scw_nomad_image_id: "{{scw_image_id}}"
+scw_nomad_prefix_name: nomad
+scw_nomad_count: "{{scw_count}}"
+scw_nomad_tags:
+  - nomad
+  - consul_agent
+
+# Nomad agent
+scw_nomad_agent_offer_id: "9eebce52-f7d5-484f-9437-b234164c4c4b"
+scw_nomad_agent_image_id: "d859aa89-8b4a-4551-af42-ff7c0c27260a"
+scw_nomad_agent_ssh_key_ids: ["4f49f500-6151-4fa9-b01c-54419cb1244a"]
+scw_nomad_agent_zone: fr-par-2
+scw_nomad_agent_prefix_name: nomad-agent
+scw_nomad_agent_count: "{{scw_count}}"
+scw_nomad_agent_tags:
+  - nomad_agent
+  - consul_agent

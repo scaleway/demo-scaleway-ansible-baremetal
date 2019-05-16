@@ -1,0 +1,13 @@
+---
+# deploy nomad servers
+- name: Deploy nomad instance
+  scaleway_compute:
+    name: "{{scw_prefix_name}}-{{scw_nomad_prefix_name}}-{{item}}"
+    state: running
+    image: "{{ scw_nomad_image_id }}"
+    organization: "{{ scw_organization_id }}"
+    region: "{{ scw_region }}"
+    commercial_type: "{{ scw_nomad_commercial_type }}"
+    tags: "{{scw_tags + scw_nomad_tags}}"
+    wait: True
+  with_sequence: start=1 end={{ scw_nomad_count }}
